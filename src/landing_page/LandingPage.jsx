@@ -1,14 +1,16 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-/* ── blink keyframe injected once ── */
+/* ── blink keyframe ── */
 if (typeof document !== "undefined") {
   const s = document.createElement("style");
   s.textContent = `@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}`;
   document.head.appendChild(s);
 }
 
-/* ── constants ── */
+/* ═══════════════════════════════════════
+   CONSTANTS
+═══════════════════════════════════════ */
 const TYPEWRITER_TEXT =
   "At LAFODAP, we believe that every individual, regardless of their circumstances, deserves the opportunity to thrive. Our mission is to empower orphans, vulnerable families, individuals with disabilities, and those facing hardship by providing the support, education, and resources needed to rebuild their futures. Through our work, we create a ripple effect of transformation, offering the tools for self-sufficiency and growth. With a focus on empowerment, self-sustainability, and advocacy, we strive to build a world where every person has the chance to reach their full potential and live a life full of hope and opportunity.";
 
@@ -21,7 +23,188 @@ const BARS = [
   { label: "Skill Acquisition", target: 91 },
 ];
 
-/* ── TypewriterText ── */
+const CAMPAIGNS = [
+  {
+    img: "/assets/education-causes-img.jpg",
+    tag: "Education",
+    tagColor: "#1E3D2A",
+    title: "A Greater Reach for Uptown Skills",
+    desc: "Help us expand our reach to more communities and provide quality education to underprivileged children.",
+    raised: 12400,
+    goal: 20000,
+    percent: 62,
+  },
+  {
+    img: "/assets/orphan-causes.jpg",
+    tag: "Care",
+    tagColor: "#1E3D2A",
+    title: "Run & NGO Children's Sponsorship",
+    desc: "We aim to sponsor children in partnership with our network of NGOs to ensure every child gets a chance.",
+    raised: 8750,
+    goal: 15000,
+    percent: 46,
+  },
+  {
+    img: "/assets/empowerment-causes2.jpg",
+    tag: "Skills",
+    tagColor: "#1E3D2A",
+    title: "Raising Money for Vision Rescue",
+    desc: "We provide essential eye care and assistive resources for people living with visual impairments.",
+    raised: 4200,
+    goal: 25000,
+    percent: 77,
+  },
+];
+
+const INITIATIVES = [
+  {
+    id: 1,
+    title: "Education & Mentorship",
+    desc: "Building brighter futures through learning and guidance.",
+    img: "/assets/education-causes-img.jpg",
+    featured: false,
+  },
+  {
+    id: 2,
+    title: "Clean Energy Access",
+    desc: "Solar lights and safe power for off-grid families.",
+    img: "/assets/empowerment-causes2.jpg",
+    featured: true,
+  },
+  {
+    id: 3,
+    title: "Community Empowerment",
+    desc: "Supporting women and youth to start sustainable businesses.",
+    img: "/assets/disability-causes-img.jpg",
+    featured: false,
+  },
+];
+
+const STATS = [
+  { num: 900, suffix: "+", label: "Students\nMentored" },
+  { num: 120, suffix: "+", label: "Villages\nLit Up" },
+  { num: 3000, suffix: "k+", label: "Families\nReached", display: "3k+" },
+];
+
+const SCALLOP_ID = "scallop-clip";
+
+const TESTIMONIALS = [
+  {
+    quote:
+      "LAFODAP changed everything for my family. My daughter now attends school and I have skills to provide for us. This organisation gave us back our dignity.",
+    name: "Fatima Musa",
+    role: "Program Beneficiary",
+    img: "/assets/orphan-causes.jpg",
+  },
+  {
+    quote:
+      "Volunteering with LAFODAP has been the most humbling experience of my life. Seeing children smile and learn fills my heart with immeasurable joy every single day.",
+    name: "Emeka Okafor",
+    role: "Volunteer Teacher",
+    img: "/assets/about-lafodap.jpg",
+  },
+  {
+    quote:
+      "The vocational training program gave me confidence to start my own tailoring business. I now support my entire household. LAFODAP is a true blessing.",
+    name: "Ngozi Adeyemi",
+    role: "Skills Graduate",
+    img: "/assets/empowerment-causes2.jpg",
+  },
+];
+
+const AVATAR_FLOATS = [
+  // ── LEFT SIDE (top to bottom) ──
+  {
+    top: "6%",
+    left: "2%",
+    size: 72,
+    img: "/assets/testimonial-avatar-1.jpg",
+    ring: "#E8745A",
+  }, // swap img path here
+  {
+    top: "2%",
+    left: "20%",
+    size: 56,
+    img: "/assets/testimonial-avatar-2.jpg",
+    ring: "#A8D96C",
+  }, // swap img path here
+  {
+    top: "22%",
+    left: "5%",
+    size: 62,
+    img: "/assets/testimonial-avatar-3.jpg",
+    ring: "#1E3D2A",
+  }, // swap img path here
+  {
+    top: "55%",
+    left: "1%",
+    size: 54,
+    img: "/assets/testimonial-avatar-4.jpg",
+    ring: "#E8745A",
+  }, // swap img path here
+  {
+    top: "80%",
+    left: "7%",
+    size: 66,
+    img: "/assets/testimonial-avatar-5.jpg",
+    ring: "#A8D96C",
+  }, // swap img path here
+  // ── RIGHT SIDE (top to bottom) ──
+  {
+    top: "4%",
+    left: "74%",
+    size: 64,
+    img: "/assets/testimonial-avatar-6.jpg",
+    ring: "#1E3D2A",
+  }, // swap img path here
+  {
+    top: "4%",
+    left: "88%",
+    size: 58,
+    img: "/assets/testimonial-avatar-7.jpg",
+    ring: "#E8745A",
+  }, // swap img path here
+  {
+    top: "32%",
+    left: "89%",
+    size: 70,
+    img: "/assets/testimonial-avatar-8.jpg",
+    ring: "#A8D96C",
+  }, // swap img path here
+  {
+    top: "64%",
+    left: "85%",
+    size: 54,
+    img: "/assets/testimonial-avatar-9.jpg",
+    ring: "#1E3D2A",
+  }, // swap img path here
+  {
+    top: "82%",
+    left: "76%",
+    size: 60,
+    img: "/assets/testimonial-avatar-10.jpg",
+    ring: "#E8745A",
+  }, // swap img path here
+];
+
+/* ═══════════════════════════════════════
+   SUB-COMPONENTS
+═══════════════════════════════════════ */
+
+/* ── Scallop SVG defs ── */
+function ScallopDefs() {
+  return (
+    <svg width="0" height="0" style={{ position: "absolute" }}>
+      <defs>
+        <clipPath id={SCALLOP_ID} clipPathUnits="objectBoundingBox">
+          <path d="M0,0 L1,0 L1,0.82 Q0.94,0.75 0.875,0.82 Q0.81,0.89 0.75,0.82 Q0.69,0.75 0.625,0.82 Q0.56,0.89 0.5,0.82 Q0.44,0.75 0.375,0.82 Q0.31,0.89 0.25,0.82 Q0.19,0.75 0.125,0.82 Q0.06,0.89 0,0.82 Z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+/* ── Typewriter ── */
 function TypewriterText({ start }) {
   const [displayed, setDisplayed] = useState("");
   const [hovered, setHovered] = useState(false);
@@ -45,8 +228,6 @@ function TypewriterText({ start }) {
   }, [start]);
 
   const done = displayed.length >= TYPEWRITER_TEXT.length;
-
-  
 
   return (
     <p
@@ -79,41 +260,388 @@ function TypewriterText({ start }) {
   );
 }
 
-/* ── Main Page ── */
+/* ── Circle Progress ── */
+function CircleProgress({ percent }) {
+  const r = 26;
+  const circ = 2 * Math.PI * r;
+  const dash = (percent / 100) * circ;
+  return (
+    <svg width="68" height="68" viewBox="0 0 68 68">
+      <circle
+        cx="34"
+        cy="34"
+        r={r}
+        fill="white"
+        stroke="rgba(255,255,255,0.3)"
+        strokeWidth="4"
+      />
+      <circle
+        cx="34"
+        cy="34"
+        r={r}
+        fill="none"
+        stroke="white"
+        strokeWidth="4"
+        strokeDasharray={`${dash} ${circ}`}
+        strokeLinecap="round"
+        transform="rotate(-90 34 34)"
+        style={{
+          transition: "stroke-dasharray 1.2s cubic-bezier(0.22,1,0.36,1)",
+        }}
+      />
+      <text
+        x="34"
+        y="39"
+        textAnchor="middle"
+        fontSize="12"
+        fontWeight="800"
+        fill="#1E3D2A"
+      >
+        {percent}%
+      </text>
+    </svg>
+  );
+}
+
+/* ── Campaign Card ── */
+function CampaignCard({ card, visible, delay }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      className="bg-white rounded-2xl overflow-hidden flex flex-col"
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible
+          ? hovered
+            ? "translateY(-8px)"
+            : "translateY(0)"
+          : "translateY(30px)",
+        boxShadow: hovered
+          ? "0 20px 56px rgba(0,0,0,0.13)"
+          : "0 4px 24px rgba(0,0,0,0.08)",
+        transition:
+          "opacity 0.6s ease, transform 0.35s ease, box-shadow 0.35s ease",
+        transitionDelay: visible ? "0s" : delay,
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div className="relative flex-shrink-0" style={{ height: 240 }}>
+        <div
+          className="w-full h-full"
+          style={{
+            clipPath: `url(#${SCALLOP_ID})`,
+            WebkitClipPath: `url(#${SCALLOP_ID})`,
+          }}
+        >
+          <img
+            src={card.img}
+            alt={card.title}
+            className="w-full h-full object-cover"
+            style={{
+              transform: hovered ? "scale(1.06)" : "scale(1)",
+              transition: "transform 0.65s ease",
+            }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.35) 100%)",
+            }}
+          />
+        </div>
+        <div
+          className="absolute left-1/2 -translate-x-1/2"
+          style={{ bottom: -2, zIndex: 20 }}
+        >
+          <div
+            className="rounded-full flex items-center justify-center"
+            style={{ width: 68, height: 68, background: "#1E3D2A", padding: 4 }}
+          >
+            <CircleProgress percent={card.percent} />
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="px-5 pb-5 flex flex-col gap-3 flex-1"
+        style={{ paddingTop: 44 }}
+      >
+        <h3
+          className="font-extrabold text-[#1A1A18] leading-snug"
+          style={{ fontFamily: "Georgia, serif", fontSize: "1.05rem" }}
+        >
+          {card.title}
+        </h3>
+        <p className="text-gray-400 text-xs leading-relaxed flex-1">
+          {card.desc}
+        </p>
+        <div className="flex items-center justify-between text-xs font-bold pt-1">
+          <span>
+            <span className="text-gray-400 font-semibold">Raise: </span>
+            <span className="text-[#1A1A18]">
+              ${card.raised.toLocaleString()}
+            </span>
+          </span>
+          <span>
+            <span className="text-gray-400 font-semibold">Goal: </span>
+            <span className="text-[#1A1A18]">
+              ${card.goal.toLocaleString()}
+            </span>
+          </span>
+        </div>
+        <Link
+          to="/donate"
+          className="block text-center text-white text-sm font-bold uppercase tracking-widest py-3.5 rounded-full no-underline transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+          style={{ background: "linear-gradient(90deg,#E8745A,#d4614a)" }}
+        >
+          Donate Now
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+/* ── Animated counter ── */
+function CountUp({ target, suffix, display, start }) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!start) return;
+    const duration = 2000;
+    const steps = 60;
+    const increment = target / steps;
+    let current = 0;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else setCount(Math.floor(current));
+    }, duration / steps);
+    return () => clearInterval(timer);
+  }, [start, target]);
+
+  if (display) return <span>{start ? display : "0"}</span>;
+  return (
+    <span>
+      {count.toLocaleString()}
+      {suffix}
+    </span>
+  );
+}
+
+/* ── Initiative Card ── */
+function InitiativeCard({ item, visible, delay }) {
+  const [hovered, setHovered] = useState(false);
+
+  if (item.featured) {
+    return (
+      <div
+        className="rounded-3xl overflow-hidden flex flex-col relative h-full"
+        style={{
+          background: "#A8D96C",
+          opacity: visible ? 1 : 0,
+          transform: visible
+            ? hovered
+              ? "translateY(-6px) scale(1.01)"
+              : "translateY(0) scale(1)"
+            : "translateY(28px)",
+          transition:
+            "opacity 0.6s ease, transform 0.4s ease, box-shadow 0.4s ease",
+          transitionDelay: delay,
+          boxShadow: hovered
+            ? "0 24px 60px rgba(168,217,108,0.4)"
+            : "0 8px 32px rgba(168,217,108,0.25)",
+        }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <div className="overflow-hidden" style={{ height: 280 }}>
+          <img
+            src={item.img}
+            alt={item.title}
+            className="w-full h-full object-cover"
+            style={{
+              transform: hovered ? "scale(1.06)" : "scale(1)",
+              transition: "transform 0.7s ease",
+            }}
+          />
+        </div>
+        <div className="px-5 py-4 flex items-start justify-between gap-3">
+          <div>
+            <h3
+              className="font-extrabold text-[#1A1A18] text-base leading-tight mb-1"
+              style={{ fontFamily: "Georgia, serif" }}
+            >
+              {item.title}
+            </h3>
+            <p className="text-[#1A1A18]/70 text-xs leading-relaxed">
+              {item.desc}
+            </p>
+          </div>
+          <div className="flex-shrink-0 w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#1A1A18"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M7 17L17 7M7 7h10v10" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="rounded-3xl overflow-hidden flex flex-col h-full"
+      style={{
+        background: "#ffffff",
+        opacity: visible ? 1 : 0,
+        transform: visible
+          ? hovered
+            ? "translateY(-6px)"
+            : "translateY(0)"
+          : "translateY(28px)",
+        transition:
+          "opacity 0.6s ease, transform 0.4s ease, box-shadow 0.4s ease",
+        transitionDelay: delay,
+        boxShadow: hovered
+          ? "0 20px 50px rgba(0,0,0,0.1)"
+          : "0 4px 20px rgba(0,0,0,0.06)",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div className="px-5 pt-5 pb-3 flex items-start justify-between gap-3 flex-shrink-0">
+        <div>
+          <h3
+            className="font-extrabold text-[#1A1A18] text-base leading-tight mb-1"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
+            {item.title}
+          </h3>
+          <p className="text-[#6b7280] text-xs leading-relaxed">{item.desc}</p>
+        </div>
+        <div className="flex-shrink-0 w-9 h-9 rounded-full bg-[#A8D96C] flex items-center justify-center">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#1A1A18"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M7 17L17 7M7 7h10v10" />
+          </svg>
+        </div>
+      </div>
+      <div
+        className="overflow-hidden mx-4 mb-4 rounded-2xl flex-1"
+        style={{ minHeight: 190 }}
+      >
+        <img
+          src={item.img}
+          alt={item.title}
+          className="w-full h-full object-cover"
+          style={{
+            transform: hovered ? "scale(1.06)" : "scale(1)",
+            transition: "transform 0.7s ease",
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════
+   MAIN PAGE
+═══════════════════════════════════════ */
 export default function LandingPage() {
+  /* refs */
   const aboutRef = useRef(null);
   const impactRef = useRef(null);
+  const empowerRef = useRef(null);
+  const empowerStatsRef = useRef(null);
+  const campaignRef = useRef(null);
+  const testimonialRef = useRef(null);
+  const storyRef = useRef(null);
+
+  /* visibility */
   const [aboutVisible, setAboutVisible] = useState(false);
   const [impactVisible, setImpactVisible] = useState(false);
+  const [empowerVisible, setEmpowerVisible] = useState(false);
+  const [empowerStatsVisible, setEmpowerStatsVisible] = useState(false);
+  const [campaignVisible, setCampaignVisible] = useState(false);
+  const [testimonialVisible, setTestimonialVisible] = useState(false);
+  const [storyVisible, setStoryVisible] = useState(false);
+
+  /* bars */
   const [barWidths, setBarWidths] = useState(BARS.map(() => 0));
   const [hoveredBar, setHoveredBar] = useState(null);
 
+  /* campaign slider */
+  const [current, setCurrent] = useState(0);
+  const prev = () =>
+    setCurrent((c) => (c - 1 + CAMPAIGNS.length) % CAMPAIGNS.length);
+  const next = () => setCurrent((c) => (c + 1) % CAMPAIGNS.length);
+
+  /* observers */
   useEffect(() => {
-    const aObs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) setAboutVisible(true);
-      },
-      { threshold: 0.15 },
+    const make = (setter, extra) =>
+      new IntersectionObserver(
+        ([e]) => {
+          if (e.isIntersecting) {
+            setter(true);
+            extra?.();
+          }
+        },
+        { threshold: 0.15 },
+      );
+
+    const aObs = make(setAboutVisible);
+    const iObs = make(setImpactVisible, () =>
+      setTimeout(() => setBarWidths(BARS.map((b) => b.target)), 200),
     );
-    const iObs = new IntersectionObserver(
+    const eObs = make(setEmpowerVisible);
+    const esObs = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting) {
-          setImpactVisible(true);
-          setTimeout(() => setBarWidths(BARS.map((b) => b.target)), 200);
-        }
+        if (e.isIntersecting) setEmpowerStatsVisible(true);
       },
-      { threshold: 0.15 },
+      { threshold: 0.2 },
     );
+    const cObs = make(setCampaignVisible);
+    const sObs = make(setStoryVisible);
+
+    const tObs = make(setTestimonialVisible);
+
     if (aboutRef.current) aObs.observe(aboutRef.current);
     if (impactRef.current) iObs.observe(impactRef.current);
-    return () => {
-      aObs.disconnect();
-      iObs.disconnect();
-    };
+    if (empowerRef.current) eObs.observe(empowerRef.current);
+    if (empowerStatsRef.current) esObs.observe(empowerStatsRef.current);
+    if (campaignRef.current) cObs.observe(campaignRef.current);
+    if (testimonialRef.current) tObs.observe(testimonialRef.current);
+    if (storyRef.current) sObs.observe(storyRef.current);
+
+    return () =>
+      [aObs, iObs, eObs, esObs, cObs, tObs, sObs].forEach((o) =>
+        o.disconnect(),
+      );
   }, []);
 
   return (
     <div className="w-full overflow-x-hidden">
+      <ScallopDefs />
+
       {/* ══════════════════════════════════════
           HERO
       ══════════════════════════════════════ */}
@@ -226,7 +754,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* HERO STATS — hidden on very small screens */}
+        {/* HERO STATS */}
         <div className="absolute bottom-0 left-0 z-10 hidden sm:flex">
           {[
             { num: "652K", label: "Lives Touched" },
@@ -263,14 +791,14 @@ export default function LandingPage() {
       </div>
 
       {/* ══════════════════════════════════════
-          ABOUT SECTION
+          ABOUT
       ══════════════════════════════════════ */}
       <div className="bg-white w-full py-12 md:py-20 px-5 md:px-10">
         <div className="w-full max-w-[1080px] mx-auto flex flex-col md:flex-row items-center gap-10 md:gap-14">
-          {/* LEFT: PHOTO COLLAGE — stacks on mobile, collage on md+ */}
+          {/* photo collage */}
           <div
             className="w-full md:w-1/2 relative flex-shrink-0"
-            style={{ height: "clamp(280px, 50vw, 480px)" }}
+            style={{ height: "clamp(280px,50vw,480px)" }}
           >
             <div
               className="absolute border-2 border-dashed border-[#c8d8c0] rounded-sm pointer-events-none"
@@ -282,7 +810,6 @@ export default function LandingPage() {
                 zIndex: 0,
               }}
             />
-
             <div
               className="absolute overflow-hidden rounded-sm shadow-lg"
               style={{
@@ -333,12 +860,11 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* RIGHT: TEXT */}
+          {/* text */}
           <div
             ref={aboutRef}
             className="w-full md:w-1/2 flex flex-col gap-4 md:gap-5"
           >
-            {/* Label */}
             <div
               className="flex items-center gap-2 w-fit cursor-default group"
               style={{
@@ -346,7 +872,7 @@ export default function LandingPage() {
                 transform: aboutVisible
                   ? "translate(0,0)"
                   : "translate(-20px,10px)",
-                transition: "opacity 0.6s ease, transform 0.6s ease",
+                transition: "opacity 0.6s ease,transform 0.6s ease",
               }}
             >
               <span className="h-[2px] bg-[#E8745A] transition-all duration-300 ease-out w-5 group-hover:w-10" />
@@ -356,7 +882,6 @@ export default function LandingPage() {
               <span className="h-[2px] bg-[#E8745A] transition-all duration-300 ease-out w-5 group-hover:w-10" />
             </div>
 
-            {/* Heading lines */}
             <div className="flex flex-col">
               {[
                 { text: "When We Choose to Uplift", delay: "0.15s" },
@@ -368,14 +893,14 @@ export default function LandingPage() {
                   className="font-black text-[#111] cursor-default"
                   style={{
                     fontFamily: "Georgia, serif",
-                    fontSize: "clamp(1.4rem, 3vw, 2.15rem)",
+                    fontSize: "clamp(1.4rem,3vw,2.15rem)",
                     lineHeight: 1.25,
                     opacity: aboutVisible ? 1 : 0,
                     transform: aboutVisible
                       ? "translate(0,0)"
                       : "translate(-24px,16px)",
                     transition:
-                      "opacity 0.65s ease, transform 0.65s ease, color 0.25s ease",
+                      "opacity 0.65s ease,transform 0.65s ease,color 0.25s ease",
                     transitionDelay: delay,
                   }}
                   onMouseEnter={(e) => {
@@ -392,10 +917,8 @@ export default function LandingPage() {
               ))}
             </div>
 
-            {/* Typewriter */}
             <TypewriterText start={aboutVisible} />
 
-            {/* Stat cards */}
             <div className="grid grid-cols-2 mt-1">
               <div className="bg-[#1a4a2e] px-4 md:px-7 py-5 md:py-6">
                 <p className="text-[#a8c5b0] text-[10px] uppercase tracking-widest mb-1">
@@ -413,7 +936,7 @@ export default function LandingPage() {
                     ? "translate(0,0)"
                     : "translate(20px,16px)",
                   transition:
-                    "opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease",
+                    "opacity 0.6s ease,transform 0.6s ease,box-shadow 0.3s ease",
                   transitionDelay: "1.1s",
                 }}
                 onMouseEnter={(e) => {
@@ -435,14 +958,13 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* CTA */}
             <div
               style={{
                 opacity: aboutVisible ? 1 : 0,
                 transform: aboutVisible
                   ? "translate(0,0)"
                   : "translate(-16px,16px)",
-                transition: "opacity 0.6s ease, transform 0.6s ease",
+                transition: "opacity 0.6s ease,transform 0.6s ease",
                 transitionDelay: "1.25s",
               }}
             >
@@ -458,16 +980,15 @@ export default function LandingPage() {
       </div>
 
       {/* ══════════════════════════════════════
-          IMPACT / PROGRESS BARS SECTION
+          IMPACT / PROGRESS BARS
       ══════════════════════════════════════ */}
       <div className="bg-[#FAF8F5] w-full py-12 md:py-16 px-5 md:px-10">
         <div
           ref={impactRef}
           className="max-w-[1080px] mx-auto flex flex-col lg:flex-row items-start gap-10 lg:gap-12"
         >
-          {/* LEFT: PHOTO GRID */}
-          <div className="w-full lg:hidden flex gap-3 mb-6">
-            {/* Mobile: just 2 photos side by side */}
+          {/* mobile: 2 photos */}
+          <div className="w-full lg:hidden flex gap-3 mb-2">
             <div
               className="rounded-2xl overflow-hidden shadow-md group flex-1"
               style={{ height: 180 }}
@@ -490,18 +1011,17 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Desktop: full photo grid — hidden on mobile */}
+          {/* desktop: full grid */}
           <div
-            className="hidden lg:flex gap-3 flex-shrink-0 bg-yellow-600"
+            className="hidden lg:flex gap-3 flex-shrink-0"
             style={{ width: 500 }}
           >
-            {/* LEFT COLUMN */}
             <div
               className="flex flex-col gap-3 flex-shrink-0"
               style={{ width: 250 }}
             >
               <div
-                className="rounded-2xl overflow-hidden shadow-md group flex-shrink-0"
+                className="rounded-2xl overflow-hidden shadow-md group"
                 style={{ height: 220 }}
               >
                 <img
@@ -511,7 +1031,7 @@ export default function LandingPage() {
                 />
               </div>
               <div
-                className="rounded-2xl overflow-hidden shadow-md group flex-shrink-0"
+                className="rounded-2xl overflow-hidden shadow-md group"
                 style={{ height: 180 }}
               >
                 <img
@@ -521,7 +1041,7 @@ export default function LandingPage() {
                 />
               </div>
               <div
-                className="bg-white rounded-2xl shadow-md p-4 border border-gray-100 flex-shrink-0"
+                className="bg-white rounded-2xl shadow-md p-4 border border-gray-100"
                 style={{ height: 170 }}
               >
                 <p className="text-gray-500 text-sm leading-relaxed italic mb-4">
@@ -532,14 +1052,12 @@ export default function LandingPage() {
                 <p className="text-gray-400 text-xs">Community Member</p>
               </div>
             </div>
-
-            {/* RIGHT COLUMN */}
             <div
               className="flex flex-col gap-3 flex-shrink-0"
               style={{ width: 228 }}
             >
               <div
-                className="rounded-2xl overflow-hidden shadow-lg group flex-shrink-0"
+                className="rounded-2xl overflow-hidden shadow-lg group"
                 style={{ height: 340 }}
               >
                 <img
@@ -549,7 +1067,7 @@ export default function LandingPage() {
                 />
               </div>
               <div
-                className="rounded-2xl overflow-hidden shadow-md group flex-shrink-0"
+                className="rounded-2xl overflow-hidden shadow-md group"
                 style={{ height: 230 }}
               >
                 <img
@@ -561,31 +1079,28 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* RIGHT: TEXT + BARS */}
+          {/* text + bars */}
           <div className="flex flex-col gap-4 flex-1 w-full">
-            {/* gift label */}
             <span
               className="text-sm font-bold uppercase tracking-widest"
               style={{
                 color: "#1E3D2A",
                 opacity: impactVisible ? 1 : 0,
                 transform: impactVisible ? "translateY(0)" : "translateY(12px)",
-                transition: "opacity 0.5s ease, transform 0.5s ease",
+                transition: "opacity 0.5s ease,transform 0.5s ease",
               }}
             >
-              OUR FOCUSED IMPACT
+              Our Focused Impact
             </span>
-
-            {/* heading */}
             <h2
               className="font-extrabold text-[#1A1A18] leading-tight"
               style={{
                 fontFamily: "Georgia, serif",
-                fontSize: "clamp(1.6rem, 3vw, 2.8rem)",
+                fontSize: "clamp(1.6rem,3vw,2.8rem)",
                 letterSpacing: "-0.02em",
                 opacity: impactVisible ? 1 : 0,
                 transform: impactVisible ? "translateY(0)" : "translateY(16px)",
-                transition: "opacity 0.6s ease, transform 0.6s ease",
+                transition: "opacity 0.6s ease,transform 0.6s ease",
                 transitionDelay: "0.1s",
               }}
             >
@@ -593,14 +1108,12 @@ export default function LandingPage() {
               <br />
               Improves World
             </h2>
-
-            {/* subtitle */}
             <p
               className="text-gray-500 text-sm leading-relaxed max-w-sm"
               style={{
                 opacity: impactVisible ? 1 : 0,
                 transform: impactVisible ? "translateY(0)" : "translateY(14px)",
-                transition: "opacity 0.6s ease, transform 0.6s ease",
+                transition: "opacity 0.6s ease,transform 0.6s ease",
                 transitionDelay: "0.2s",
               }}
             >
@@ -608,8 +1121,7 @@ export default function LandingPage() {
               clean water, education, skill training, and disability support.
             </p>
 
-            {/* progress bars */}
-            <div className="flex flex-col gap-3 mt-1 w-full">
+            <div className="flex flex-col gap-4 mt-1 w-full">
               {BARS.map((bar, i) => (
                 <div
                   key={bar.label}
@@ -618,7 +1130,7 @@ export default function LandingPage() {
                     transform: impactVisible
                       ? "translateX(0)"
                       : "translateX(24px)",
-                    transition: "opacity 0.5s ease, transform 0.5s ease",
+                    transition: "opacity 0.5s ease,transform 0.5s ease",
                     transitionDelay: `${0.3 + i * 0.08}s`,
                   }}
                 >
@@ -626,7 +1138,7 @@ export default function LandingPage() {
                     <span
                       className="font-bold transition-all duration-300 cursor-default"
                       style={{
-                        fontSize: hoveredBar === i ? "1rem" : "1.15rem",
+                        fontSize: hoveredBar === i ? "1.1rem" : "0.88rem",
                         color: hoveredBar === i ? "#1E3D2A" : "#1A1A18",
                       }}
                     >
@@ -635,7 +1147,7 @@ export default function LandingPage() {
                     <span
                       className="font-bold tabular-nums transition-all duration-300"
                       style={{
-                        fontSize: hoveredBar === i ? "1rem" : "1.15rem",
+                        fontSize: hoveredBar === i ? "1.1rem" : "0.88rem",
                         color: hoveredBar === i ? "#1E3D2A" : "#6b7280",
                       }}
                     >
@@ -658,10 +1170,10 @@ export default function LandingPage() {
                         width: `${barWidths[i]}%`,
                         background:
                           hoveredBar === i
-                            ? "linear-gradient(90deg, #1E3D2A, #2d8a52)"
+                            ? "linear-gradient(90deg,#1E3D2A,#2d8a52)"
                             : "#1E3D2A",
                         transition:
-                          "width 1.4s cubic-bezier(0.22,1,0.36,1), background 0.3s ease",
+                          "width 1.4s cubic-bezier(0.22,1,0.36,1),background 0.3s ease",
                       }}
                     />
                   </div>
@@ -669,13 +1181,12 @@ export default function LandingPage() {
               ))}
             </div>
 
-            {/* CTA */}
             <div
               className="mt-2"
               style={{
                 opacity: impactVisible ? 1 : 0,
                 transform: impactVisible ? "translateY(0)" : "translateY(12px)",
-                transition: "opacity 0.5s ease, transform 0.5s ease",
+                transition: "opacity 0.5s ease,transform 0.5s ease",
                 transitionDelay: "0.85s",
               }}
             >
@@ -689,10 +1200,565 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
-      {/* featured campaign */}
-      <div>
 
+      {/* ══════════════════════════════════════
+          EMPOWER SECTION
+      ══════════════════════════════════════ */}
+      <div className="w-full" style={{ background: "#dce8d4" }}>
+        {/* TOP: HEADING + CARDS */}
+        <div
+          ref={empowerRef}
+          className="max-w-[1080px] mx-auto px-5 md:px-10 pt-16 md:pt-20 pb-10"
+        >
+          <div
+            className="text-center mb-10 md:mb-14"
+            style={{
+              opacity: empowerVisible ? 1 : 0,
+              transform: empowerVisible ? "translateY(0)" : "translateY(20px)",
+              transition: "opacity 0.6s ease,transform 0.6s ease",
+            }}
+          >
+            <h2
+              className="font-extrabold text-[#1A1A18] leading-tight mb-3"
+              style={{
+                fontFamily: "Georgia, serif",
+                fontSize: "clamp(1.9rem,4.5vw,3.2rem)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Empowering People. Inspiring
+              <br />
+              Real Change.
+            </h2>
+            <p className="text-[#4a5e42] text-sm md:text-base max-w-md mx-auto">
+              Every initiative is designed with communities, not just for them.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 items-stretch">
+            {INITIATIVES.map((item, i) => (
+              <InitiativeCard
+                key={item.id}
+                item={item}
+                visible={empowerVisible}
+                delay={`${i * 0.12}s`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* BOTTOM: STATS CARD */}
+        <div className="max-w-[1080px] mx-auto px-5 md:px-10 pb-16 md:pb-20">
+          <div
+            ref={empowerStatsRef}
+            className="bg-white rounded-3xl px-8 md:px-12 py-10 md:py-12"
+            style={{
+              opacity: empowerVisible ? 1 : 0,
+              transform: empowerVisible ? "translateY(0)" : "translateY(24px)",
+              transition: "opacity 0.6s ease, transform 0.6s ease",
+              transitionDelay: "0.4s",
+              boxShadow: "0 4px 32px rgba(0,0,0,0.06)",
+            }}
+          >
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-8">
+              <div>
+                <h3
+                  className="font-extrabold text-[#1A1A18] leading-tight mb-2"
+                  style={{
+                    fontFamily: "Georgia, serif",
+                    fontSize: "clamp(1.5rem,3vw,2.4rem)",
+                  }}
+                >
+                  Every Number Holds a Story
+                </h3>
+                <p className="text-[#6b7280] text-sm max-w-sm leading-relaxed">
+                  Each figure represents hope restored, futures rewritten, and
+                  lives forever changed.
+                </p>
+              </div>
+              <Link
+                to="/stories"
+                className="flex-shrink-0 inline-flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-full no-underline transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+                style={{ background: "#1E3D2A", whiteSpace: "nowrap" }}
+              >
+                More Stories Of Change
+                <div className="w-6 h-6 rounded-full bg-[#A8D96C] flex items-center justify-center flex-shrink-0">
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#1A1A18"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </Link>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-stretch gap-0 overflow-hidden">
+              {STATS.map((stat, i) => (
+                <React.Fragment key={stat.label}>
+                  <div className="flex-1 flex flex-col items-center justify-center text-center px-6 py-6 overflow-hidden">
+                    <span
+                      className="font-extrabold leading-none select-none block w-full text-center"
+                      style={{
+                        fontFamily: "Georgia, serif",
+                        fontSize: "clamp(3.5rem,7vw,6rem)",
+                        color: "rgba(168,217,108,0.5)",
+                        lineHeight: 1,
+                        overflow: "hidden",
+                        textOverflow: "clip",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      <CountUp
+                        target={stat.num}
+                        suffix={stat.suffix}
+                        display={stat.display}
+                        start={empowerStatsVisible}
+                      />
+                    </span>
+                    <p
+                      className="font-black text-[#1A1A18] leading-tight mt-3 whitespace-pre-line"
+                      style={{
+                        fontSize: "clamp(1rem,1.8vw,1.25rem)",
+                        letterSpacing: "-0.01em",
+                      }}
+                    >
+                      {stat.label}
+                    </p>
+                  </div>
+                  {i < STATS.length - 1 && (
+                    <div
+                      className="hidden sm:block w-px self-stretch my-4"
+                      style={{ background: "#e5e7eb" }}
+                    />
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
+
+      {/* ══════════════════════════════════════
+          FEATURED CAMPAIGNS
+      ══════════════════════════════════════ */}
+      <div className="bg-green py-14 md:py-20 px-5 md:px-10">
+        <div ref={campaignRef} className="max-w-[1080px] mx-auto">
+          <div className="flex items-start justify-between mb-10 md:mb-14">
+            <div
+              style={{
+                opacity: campaignVisible ? 1 : 0,
+                transform: campaignVisible
+                  ? "translateY(0)"
+                  : "translateY(20px)",
+                transition: "opacity 0.6s ease,transform 0.6s ease",
+              }}
+            >
+              <p className="text-[#E8745A] text-xs font-bold uppercase tracking-widest mb-2">
+                We Need Your Help
+              </p>
+              <h2
+                className="font-extrabold text-[#1A1A18] leading-tight"
+                style={{
+                  fontFamily: "Georgia, serif",
+                  fontSize: "clamp(1.8rem,4vw,3rem)",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                Featured Campaigns
+              </h2>
+            </div>
+            <div
+              className="flex gap-2 mt-2 flex-shrink-0"
+              style={{
+                opacity: campaignVisible ? 1 : 0,
+                transition: "opacity 0.6s ease 0.3s",
+              }}
+            >
+              <button
+                onClick={prev}
+                className="w-9 h-9 rounded-full border-2 border-gray-200 flex items-center justify-center text-gray-400 hover:border-[#E8745A] hover:text-[#E8745A] transition-all duration-200"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+              <button
+                onClick={next}
+                className="w-9 h-9 rounded-full border-2 border-gray-200 flex items-center justify-center text-gray-400 hover:border-[#E8745A] hover:text-[#E8745A] transition-all duration-200"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div className="hidden md:grid grid-cols-3 gap-6 lg:gap-8">
+            {CAMPAIGNS.map((card, i) => (
+              <CampaignCard
+                key={card.title}
+                card={card}
+                visible={campaignVisible}
+                delay={`${i * 0.15}s`}
+              />
+            ))}
+          </div>
+
+          <div className="md:hidden">
+            <CampaignCard
+              card={CAMPAIGNS[current]}
+              visible={campaignVisible}
+              delay="0s"
+            />
+            <div className="flex justify-center gap-2 mt-6">
+              {CAMPAIGNS.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrent(i)}
+                  className="rounded-full transition-all duration-300"
+                  style={{
+                    width: i === current ? 20 : 8,
+                    height: 8,
+                    background: i === current ? "#E8745A" : "#e5e7eb",
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════════
+          FEATURED STORY
+      ══════════════════════════════════════ */}
+      <div ref={storyRef} className="bg-[#1E3D2A] w-full">
+        <div className="max-w-[1080px] mx-auto flex flex-col md:flex-row min-h-[520px]">
+          <div className="flex flex-col justify-center gap-5 px-8 md:px-12 py-14 md:py-16 w-full md:w-[42%] flex-shrink-0">
+            <div
+              className="flex items-center gap-2"
+              style={{
+                opacity: storyVisible ? 1 : 0,
+                transform: storyVisible ? "translateY(0)" : "translateY(14px)",
+                transition: "opacity 0.6s ease,transform 0.6s ease",
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#A8D96C">
+                <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" />
+              </svg>
+              <span className="text-[#A8D96C] text-xs font-bold uppercase tracking-widest">
+                Our Story
+              </span>
+            </div>
+
+            <h2
+              className="font-extrabold text-white leading-tight"
+              style={{
+                fontFamily: "Georgia, serif",
+                fontSize: "clamp(2rem,4vw,3rem)",
+                letterSpacing: "-0.02em",
+                opacity: storyVisible ? 1 : 0,
+                transform: storyVisible ? "translateY(0)" : "translateY(18px)",
+                transition: "opacity 0.65s ease,transform 0.65s ease",
+                transitionDelay: "0.12s",
+              }}
+            >
+              Featured Campaing
+              <br />
+              Building A Future
+              <br />
+              <em className="italic text-[#A8D96C]">Ikorodu Rally</em>
+            </h2>
+
+            <p
+              className="text-white/60 text-sm leading-relaxed"
+              style={{
+                opacity: storyVisible ? 1 : 0,
+                transform: storyVisible ? "translateY(0)" : "translateY(16px)",
+                transition: "opacity 0.65s ease,transform 0.65s ease",
+                transitionDelay: "0.25s",
+              }}
+            >
+              Our recent campaign in Ikorodu, Lagos, showcased the power of
+              community collaboration. In partnership with local government
+              officials, including the Chairman of Ikorodu Local Government, we
+              delivered essential services to vulnerable groups, including
+              orphans, disabled individuals, youth, and mothers. <br /><br />
+              We distributed over 100 wheelchairs, provided food supplies, and
+              offered free medical screenings to hundreds. Additionally, we
+              empowered local businesses with grants, and provided sewing
+              machines and motorcycles to youth and mothers, creating
+              opportunities for financial independence. <br /><br />
+              This impactful campaign, made possible by local leaders,
+              volunteers, and partners, ignited lasting change and brought hope
+              to the community, taking us a step closer to our mission of a
+              brighter, more inclusive future.
+            </p>
+
+            <div
+              style={{
+                opacity: storyVisible ? 1 : 0,
+                transform: storyVisible ? "translateY(0)" : "translateY(14px)",
+                transition: "opacity 0.6s ease,transform 0.6s ease",
+                transitionDelay: "0.38s",
+              }}
+            >
+              <Link
+                to="/about"
+                className="inline-flex items-center gap-2 text-[#A8D96C] text-xs font-bold uppercase tracking-widest no-underline hover:opacity-75 transition-opacity"
+              >
+                Read More
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+
+          <div
+            className="flex-1 grid grid-cols-2 gap-1.5 p-1.5 min-h-[320px] md:min-h-0"
+            style={{
+              opacity: storyVisible ? 1 : 0,
+              transform: storyVisible ? "translateX(0)" : "translateX(40px)",
+              transition: "opacity 0.75s ease,transform 0.75s ease",
+              transitionDelay: "0.2s",
+            }}
+          >
+            <div className="row-span-2 rounded-xl overflow-hidden group min-h-[260px]">
+              <img
+                src="/assets/about-lafodap.jpg"
+                alt="Story 1"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+            <div
+              className="rounded-xl overflow-hidden group"
+              style={{ minHeight: 130 }}
+            >
+              <img
+                src="/assets/orphan-causes.jpg"
+                alt="Story 2"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+            <div
+              className="rounded-xl overflow-hidden group"
+              style={{ minHeight: 130 }}
+            >
+              <img
+                src="/assets/education-causes-img.jpg"
+                alt="Story 3"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+            <div
+              className="rounded-xl overflow-hidden group"
+              style={{ minHeight: 120 }}
+            >
+              <img
+                src="/assets/disability-causes-img.jpg"
+                alt="Story 4"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+            <div
+              className="rounded-xl overflow-hidden group"
+              style={{ minHeight: 120 }}
+            >
+              <img
+                src="/assets/empowerment-causes2.jpg"
+                alt="Story 5"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════════
+          TESTIMONIALS
+      ══════════════════════════════════════ */}
+      <div
+        ref={testimonialRef}
+        className="relative w-full overflow-hidden bg-[#FAF8F5]"
+        style={{ minHeight: 680 }}
+      >
+        {/* Africa map image watermark */}
+        <div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
+          style={{ zIndex: 0 }}
+        >
+          <img
+            src="/assets/african-map.png"
+            alt=""
+            style={{
+              width: "min(55vw, 520px)",
+              height: "auto",
+              opacity: 0.08,
+              filter: "grayscale(100%) brightness(0)",
+            }}
+          />
+        </div>
+
+        {/* floating avatars */}
+        {AVATAR_FLOATS.map((av, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full overflow-hidden"
+            style={{
+              top: av.top,
+              left: av.left,
+              width: av.size,
+              height: av.size,
+              border: `3px solid ${av.ring}`,
+              boxShadow: "0 4px 18px rgba(0,0,0,0.12)",
+              opacity: testimonialVisible ? 1 : 0,
+              transform: testimonialVisible ? "scale(1)" : "scale(0.7)",
+              transition: "opacity 0.6s ease, transform 0.6s ease",
+              transitionDelay: `${0.1 + i * 0.07}s`,
+              zIndex: 1,
+            }}
+          >
+            <img src={av.img} alt="" className="w-full h-full object-cover" />
+          </div>
+        ))}
+
+        {/* content */}
+        <div className="relative z-10 max-w-[1080px] mx-auto px-5 md:px-10 py-16 md:py-20">
+          {/* heading */}
+          <div
+            className="text-center mb-12"
+            style={{
+              opacity: testimonialVisible ? 1 : 0,
+              transform: testimonialVisible
+                ? "translateY(0)"
+                : "translateY(20px)",
+              transition: "opacity 0.6s ease, transform 0.6s ease",
+            }}
+          >
+            <p className="text-[#E8745A] text-xs font-bold uppercase tracking-widest mb-2">
+              Testimonial
+            </p>
+            <h2
+              className="font-extrabold text-[#1A1A18] leading-tight"
+              style={{
+                fontFamily: "Georgia, serif",
+                fontSize: "clamp(1.8rem,4vw,3rem)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              What Our Community Says
+            </h2>
+            <p className="text-gray-400 text-sm mt-2 max-w-sm mx-auto leading-relaxed">
+              Real voices from the people whose lives have been transformed.
+            </p>
+          </div>
+
+          {/* cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+            {TESTIMONIALS.map((t, i) => (
+              <div
+                key={t.name}
+                className="bg-white rounded-2xl p-6 flex flex-col gap-4"
+                style={{
+                  opacity: testimonialVisible ? 1 : 0,
+                  transform: testimonialVisible
+                    ? "translateY(0)"
+                    : "translateY(28px)",
+                  transition:
+                    "opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease",
+                  transitionDelay: `${0.2 + i * 0.15}s`,
+                  boxShadow: "0 2px 20px rgba(0,0,0,0.06)",
+                  borderTop: "3px solid #E8745A",
+                }}
+              >
+                {/* quote mark */}
+                <svg width="36" height="28" viewBox="0 0 36 28" fill="none">
+                  <path
+                    d="M0 28V17.2C0 12.5333 1.06667 8.6 3.2 5.4C5.33333 2.2 8.66667 0.266667 13.2 0L14.4 3C11.6 3.53333 9.46667 4.86667 8 7C6.53333 9.13333 5.86667 11.5333 6 14.2H13.2V28H0ZM21.6 28V17.2C21.6 12.5333 22.6667 8.6 24.8 5.4C26.9333 2.2 30.2667 0.266667 34.8 0L36 3C33.2 3.53333 31.0667 4.86667 29.6 7C28.1333 9.13333 27.4667 11.5333 27.6 14.2H34.8V28H21.6Z"
+                    fill="#E8745A"
+                    fillOpacity="0.25"
+                  />
+                </svg>
+
+                {/* quote text */}
+                <p
+                  className="text-[#444] leading-relaxed flex-1"
+                  style={{
+                    fontStyle: "italic",
+                    fontSize: "0.88rem",
+                    lineHeight: 1.75,
+                  }}
+                >
+                  "{t.quote}"
+                </p>
+
+                {/* person */}
+                <div className="flex items-center gap-3 pt-2 border-t border-gray-100">
+                  <div
+                    className="rounded-full overflow-hidden flex-shrink-0"
+                    style={{
+                      width: 46,
+                      height: 46,
+                      border: "2px solid #E8745A",
+                    }}
+                  >
+                    <img
+                      src={t.img}
+                      alt={t.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <p
+                      className="font-extrabold text-[#1A1A18] text-sm leading-tight"
+                      style={{ fontFamily: "Georgia, serif" }}
+                    >
+                      {t.name}
+                    </p>
+                    <p className="text-gray-400 text-xs mt-0.5">{t.role}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      
     </div>
   );
 }
