@@ -72,7 +72,7 @@ const INITIATIVES = [
     id: 2,
     title: "Clean Energy Access",
     desc: "Solar lights and safe power for off-grid families.",
-    img: "/assets/empowerment-causes2.jpg",
+    img: "/assets/clean-energy.jpeg",
     featured: true,
   },
   {
@@ -113,18 +113,7 @@ const TESTIMONIALS = [
   },
 ];
 
-const AVATAR_FLOATS = [
-  { top: "6%",  left: "2%",  size: 72, img: "/assets/testimonial-avatar-1.jpg",  ring: "#E8745A" },
-  { top: "2%",  left: "20%", size: 56, img: "/assets/testimonial-avatar-2.jpg",  ring: "#A8D96C" },
-  { top: "22%", left: "5%",  size: 62, img: "/assets/testimonial-avatar-3.jpg",  ring: "#1E3D2A" },
-  { top: "55%", left: "1%",  size: 54, img: "/assets/testimonial-avatar-4.jpg",  ring: "#E8745A" },
-  { top: "80%", left: "7%",  size: 66, img: "/assets/testimonial-avatar-5.jpg",  ring: "#A8D96C" },
-  { top: "4%",  left: "74%", size: 64, img: "/assets/testimonial-avatar-6.jpg",  ring: "#1E3D2A" },
-  { top: "4%",  left: "88%", size: 58, img: "/assets/testimonial-avatar-7.jpg",  ring: "#E8745A" },
-  { top: "32%", left: "89%", size: 70, img: "/assets/testimonial-avatar-8.jpg",  ring: "#A8D96C" },
-  { top: "64%", left: "85%", size: 54, img: "/assets/testimonial-avatar-9.jpg",  ring: "#1E3D2A" },
-  { top: "82%", left: "76%", size: 60, img: "/assets/testimonial-avatar-10.jpg", ring: "#E8745A" },
-];
+
 
 /* ═══════════════════════════════════════
    MOBILE MENU
@@ -422,14 +411,15 @@ function NewsletterSection() {
   const handleSubmit = () => { if (email.trim()) setSubmitted(true); };
 
   return (
-    <div ref={ref} className="w-full" style={{ background: "#F5F2EE" }}>
+    <div ref={ref} className="w-full" style={{ background: "#1E3D2A" }}>
       <div className="max-w-[1080px] mx-auto px-5 md:px-10 py-16 md:py-20">
         <div className="w-full rounded-3xl overflow-hidden" style={{ background: "#fff", boxShadow: "0 2px 40px rgba(0,0,0,0.07)", border: "1px solid rgba(0,0,0,0.06)" }}>
           <div className="flex flex-col md:flex-row items-stretch min-h-[200px]">
             <div className="flex flex-col justify-center gap-4 px-8 md:px-12 py-10 md:py-12 flex-1" style={{ opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(-28px)", transition: "opacity 0.7s ease, transform 0.7s ease" }}>
               <div className="flex items-center gap-2">
                 <span className="inline-block w-6 h-[2px] rounded-full" style={{ background: "#E8745A" }} />
-                <span className="text-[#E8745A] text-xs font-bold uppercase tracking-[0.18em]">Stay in the Loop</span>
+                <span className="text-[#E8745A] text-sm font-bold uppercase tracking-[0.18em]">Stay in the Loop</span>
+                <span className="inline-block w-6 h-[2px] rounded-full" style={{ background: "#E8745A" }} />
               </div>
               <h2 className="text-[#1A1A18] font-black leading-tight" style={{ fontFamily: "Georgia, serif", fontSize: "clamp(1.6rem, 3.5vw, 2.4rem)", letterSpacing: "-0.02em" }}>
                 Subscribe To Our<br /><em className="not-italic" style={{ color: "#1E3D2A" }}>Newsletter</em>
@@ -453,7 +443,7 @@ function NewsletterSection() {
                       style={{ minWidth: 0 }}
                     />
                     <button onClick={handleSubmit} className="flex-shrink-0 font-bold text-sm text-white rounded-full px-7 py-3 transition-all duration-300 hover:scale-105 hover:shadow-lg" style={{ background: "linear-gradient(135deg, #E8745A, #d4614a)", boxShadow: "0 4px 16px rgba(232,116,90,0.35)", whiteSpace: "nowrap" }}>
-                      Get Listed
+                      Subscribe
                     </button>
                   </div>
                   <p className="text-[#bbb] text-xs font-medium flex items-center gap-1.5">
@@ -823,15 +813,11 @@ export default function LandingPage() {
       </div>
 
       {/* ══ TESTIMONIALS ══ */}
-      <div ref={testimonialRef} className="relative w-full overflow-hidden bg-[#FAF8F5]" style={{ minHeight: 680 }}>
+      <div ref={testimonialRef} className="relative w-full overflow-hidden bg-[#FAF8F5]" style={{ minHeight: 480 }}>
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none" style={{ zIndex: 0 }}>
           <img src="/assets/african-map.png" alt="" style={{ width: "min(55vw, 520px)", height: "auto", opacity: 0.08, filter: "grayscale(100%) brightness(0)" }} />
         </div>
-        {AVATAR_FLOATS.map((av, i) => (
-          <div key={i} className="absolute rounded-full overflow-hidden" style={{ top: av.top, left: av.left, width: av.size, height: av.size, border: `3px solid ${av.ring}`, boxShadow: "0 4px 18px rgba(0,0,0,0.12)", opacity: testimonialVisible ? 1 : 0, transform: testimonialVisible ? "scale(1)" : "scale(0.7)", transition: "opacity 0.6s ease, transform 0.6s ease", transitionDelay: `${0.1 + i * 0.07}s`, zIndex: 1 }}>
-            <img src={av.img} alt="" className="w-full h-full object-cover" />
-          </div>
-        ))}
+        
         <div className="relative z-10 max-w-[1080px] mx-auto px-5 md:px-10 py-16 md:py-20">
           <div className="text-center mb-12" style={{ opacity: testimonialVisible ? 1 : 0, transform: testimonialVisible ? "translateY(0)" : "translateY(20px)", transition: "opacity 0.6s ease, transform 0.6s ease" }}>
             <p className="text-[#E8745A] text-xs font-bold uppercase tracking-widest mb-2">Testimonial</p>
