@@ -15,7 +15,7 @@ const NAV_LINKS = [
   ["About", "/about"],
   ["Project", "/project"],
   ["Donations", "/donate"],
-  ["Contact", "#"],
+  ["Contact", "/contact"],
 ];
 
 const BARS = [
@@ -589,7 +589,7 @@ export default function LandingPage() {
           </p>
           <div className="flex gap-3 flex-wrap">
             <Link to="/donate" className="bg-[#E8745A] text-white font-bold text-sm px-5 md:px-6 py-2.5 md:py-3 rounded-full no-underline hover:bg-[#d4614a] transition-colors">Donate Now</Link>
-            <Link to="/programs" className="text-white font-semibold text-sm px-5 md:px-6 py-2.5 md:py-3 rounded-full no-underline border border-white/40 bg-white/10 hover:bg-white/20 transition-colors">Learn More</Link>
+            <Link to="/project" className="text-white font-semibold text-sm px-5 md:px-6 py-2.5 md:py-3 rounded-full no-underline border border-white/40 bg-white/10 hover:bg-white/20 transition-colors">Learn More</Link>
           </div>
         </div>
 
@@ -694,7 +694,7 @@ export default function LandingPage() {
               ))}
             </div>
             <div className="mt-2" style={{ opacity: impactVisible ? 1 : 0, transform: impactVisible ? "translateY(0)" : "translateY(12px)", transition: "opacity 0.5s ease,transform 0.5s ease", transitionDelay: "0.85s" }}>
-              <Link to="/projects" className="inline-flex items-center gap-2 border-2 border-[#1A1A18] text-[#1A1A18] text-xs font-bold uppercase tracking-widest px-6 py-2.5 rounded-full no-underline transition-all duration-300 hover:bg-[#1A1A18] hover:text-white hover:shadow-lg">View Details</Link>
+              <Link to="/project" className="inline-flex items-center gap-2 border-2 border-[#1A1A18] text-[#1A1A18] text-xs font-bold uppercase tracking-widest px-6 py-2.5 rounded-full no-underline transition-all duration-300 hover:bg-[#1A1A18] hover:text-white hover:shadow-lg">View Details</Link>
             </div>
           </div>
         </div>
@@ -722,7 +722,7 @@ export default function LandingPage() {
                 <h3 className="font-extrabold text-[#1A1A18] leading-tight mb-2" style={{ fontFamily: "Georgia, serif", fontSize: "clamp(1.5rem,3vw,2.4rem)" }}>Every Number Holds a Story</h3>
                 <p className="text-[#6b7280] text-sm max-w-sm leading-relaxed">Each figure represents hope restored, futures rewritten, and lives forever changed.</p>
               </div>
-              <Link to="/stories" className="flex-shrink-0 inline-flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-full no-underline transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg" style={{ background: "#1E3D2A", whiteSpace: "nowrap" }}>
+              <Link to="/about" className="flex-shrink-0 inline-flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-full no-underline transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg" style={{ background: "#1E3D2A", whiteSpace: "nowrap" }}>
                 More Stories Of Change
                 <div className="w-6 h-6 rounded-full bg-[#A8D96C] flex items-center justify-center flex-shrink-0">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1A1A18" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
