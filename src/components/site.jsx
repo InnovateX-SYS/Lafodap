@@ -321,14 +321,6 @@ export function PageHero({ image, eyebrow, title, sub, crumb, height = "78vh", c
         {sub && <Reveal y={18} delay={0.25} className={align === "center" ? "mx-auto" : ""}><p className="text-white/75 text-base md:text-lg leading-relaxed mt-6 max-w-2xl">{sub}</p></Reveal>}
         {children && <Reveal y={20} delay={0.4} className="mt-8">{children}</Reveal>}
       </div>
-
-      {/* Scroll cue */}
-      <div className="absolute left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2" style={{ bottom: 28, opacity: 1 - p * 2 }}>
-        <span className="text-white/50 text-[10px] font-bold uppercase tracking-[0.25em]">Scroll</span>
-        <span className="w-[22px] h-[36px] rounded-full border-2 border-white/40 flex justify-center pt-2">
-          <span className="w-1 h-2 rounded-full bg-white/70" style={{ animation: "lf-float 1.6s ease-in-out infinite" }} />
-        </span>
-      </div>
     </header>
   );
 }
