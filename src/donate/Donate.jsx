@@ -1,20 +1,20 @@
 import React, { useState } from "react";
-import { Page, PageHero, Reveal, SplitHeading, Eyebrow, Btn, CountUp, useScrollProgress, C } from "../components/site.jsx";
+import { Page, PageHero, GlassCTA, Reveal, SplitHeading, Eyebrow, Btn, CountUp, useScrollProgress, C } from "../components/site.jsx";
 
-const PRESETS = [25, 50, 100, 250, 500, 1000];
+const PRESETS = [5000, 10000, 20000, 50000, 100000, 250000];
 
 const IMPACT = {
-  25: "Provides school supplies for a child for a full term.",
-  50: "Feeds an orphan with nutritious meals for two weeks.",
-  100: "Funds a week of vocational training for a young mother.",
-  250: "Equips a household with a solar home lighting system.",
-  500: "Sponsors a wheelchair and fitting for a person with a disability.",
-  1000: "Launches a micro-business with tools, grant and mentorship.",
+  5000: "Buys exercise books and pencils for a child for a term.",
+  10000: "Pays for reading glasses for two people at an eye screening day.",
+  20000: "Provides a solar lantern for a family without power.",
+  50000: "Covers a month of school fees and meals for a sponsored child.",
+  100000: "Gives a young mother a soap-making starter kit and training.",
+  250000: "Helps buy a wheelchair for a person with a disability.",
 };
 
 const ALLOCATION = [
   { label: "Programs & Field Work", pct: 78, color: C.green },
-  { label: "Community Outreach", pct: 14, color: C.coral },
+  { label: "Community Outreach", pct: 14, color: C.primary },
   { label: "Operations", pct: 8, color: C.lime },
 ];
 
@@ -25,14 +25,14 @@ const WAYS = [
 ];
 
 function DonateWidget() {
-  const [amount, setAmount] = useState(100);
+  const [amount, setAmount] = useState(10000);
   const [custom, setCustom] = useState("");
   const [freq, setFreq] = useState("monthly");
   const val = custom ? parseInt(custom, 10) || 0 : amount;
-  const impact = IMPACT[amount] && !custom ? IMPACT[amount] : "Every gift, at any size, creates real and measurable change in a life.";
+  const impact = IMPACT[amount] && !custom ? IMPACT[amount] : "Every gift helps, whatever the size.";
 
   return (
-    <section className="relative w-full px-5 md:px-10 -mt-20 z-30">
+    <section id="give" className="relative w-full px-5 md:px-10 -mt-20 z-30 scroll-mt-28">
       <div className="max-w-[920px] mx-auto rounded-[2rem] bg-white p-6 md:p-10 grid md:grid-cols-2 gap-8 md:gap-10" style={{ boxShadow: "0 30px 80px rgba(0,0,0,0.18)" }}>
         <div>
           <Eyebrow>Make A Gift</Eyebrow>
@@ -51,27 +51,27 @@ function DonateWidget() {
             {PRESETS.map((a) => {
               const on = !custom && amount === a;
               return (
-                <button key={a} onClick={() => { setAmount(a); setCustom(""); }} className="py-4 rounded-2xl font-extrabold text-lg transition-all duration-300"
-                  style={{ background: on ? C.coral : "#f8f6f2", color: on ? "#fff" : C.ink, border: `2px solid ${on ? C.coral : "transparent"}`, transform: on ? "translateY(-2px)" : "none", boxShadow: on ? "0 10px 24px rgba(232,116,90,0.35)" : "none" }}>
-                  ${a}
+                <button key={a} onClick={() => { setAmount(a); setCustom(""); }} className="py-4 rounded-2xl font-extrabold text-sm sm:text-base transition-all duration-300"
+                  style={{ background: on ? C.primary : "#f8f6f2", color: on ? "#fff" : C.ink, border: `2px solid ${on ? C.primary : "transparent"}`, transform: on ? "translateY(-2px)" : "none", boxShadow: on ? "0 10px 24px rgba(15,118,110,0.35)" : "none" }}>
+                  ₦{a.toLocaleString()}
                 </button>
               );
             })}
           </div>
 
-          <div className="flex items-center rounded-2xl overflow-hidden mb-6" style={{ background: "#f8f6f2", border: `2px solid ${custom ? C.coral : "transparent"}`, transition: "border-color 0.2s" }}>
-            <span className="pl-5 pr-2 text-xl font-extrabold text-gray-400">$</span>
+          <div className="flex items-center rounded-2xl overflow-hidden mb-6" style={{ background: "#f8f6f2", border: `2px solid ${custom ? C.primary : "transparent"}`, transition: "border-color 0.2s" }}>
+            <span className="pl-5 pr-2 text-xl font-extrabold text-gray-400">₦</span>
             <input type="number" value={custom} onChange={(e) => setCustom(e.target.value)} placeholder="Other amount" className="flex-1 bg-transparent outline-none py-4 text-lg font-bold text-[#1A1A18] placeholder-gray-400" style={{ minWidth: 0 }} />
           </div>
 
           <button className="w-full text-white font-bold uppercase tracking-widest py-4 rounded-full transition-all duration-300 hover:-translate-y-0.5 flex items-center justify-center gap-2"
-            style={{ background: `linear-gradient(135deg, ${C.coral}, ${C.coralDark})`, boxShadow: "0 12px 30px rgba(232,116,90,0.4)" }}>
-            Donate ${val.toLocaleString()}{freq === "monthly" ? " / mo" : ""}
+            style={{ background: `linear-gradient(135deg, ${C.primary}, ${C.primaryDark})`, boxShadow: "0 12px 30px rgba(15,118,110,0.4)" }}>
+            Give ₦{val.toLocaleString()}{freq === "monthly" ? " / mo" : ""}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
           </button>
           <p className="text-center text-gray-400 text-xs font-semibold mt-3 flex items-center justify-center gap-1.5">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={C.lime} strokeWidth="2.5"><rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
-            Secure, encrypted &amp; tax-deductible
+            Secure payment, receipt by email
           </p>
         </div>
 
@@ -80,11 +80,11 @@ function DonateWidget() {
           <div className="absolute -top-10 -right-10 w-44 h-44 rounded-full" style={{ background: "radial-gradient(circle, rgba(168,217,108,0.3), transparent 70%)" }} />
           <div className="relative">
             <span className="text-xs font-bold uppercase tracking-widest" style={{ color: C.lime }}>Your Impact</span>
-            <p className="text-white font-black mt-3 leading-tight" style={{ fontFamily: "Georgia, serif", fontSize: "clamp(1.4rem,2.6vw,1.9rem)" }}>${val.toLocaleString()} {freq === "monthly" ? "monthly" : "today"}</p>
+            <p className="text-white font-black mt-3 leading-tight" style={{ fontFamily: "Georgia, serif", fontSize: "clamp(1.4rem,2.6vw,1.9rem)" }}>₦{val.toLocaleString()} {freq === "monthly" ? "monthly" : "today"}</p>
             <p className="text-white/75 leading-relaxed mt-4 text-[0.95rem]">{impact}</p>
           </div>
           <div className="relative mt-8 rounded-2xl overflow-hidden" style={{ height: 150 }}>
-            <img src="/assets/orphan-causes.jpg" alt="Impact" className="w-full h-full object-cover" />
+            <img src="/assets/school-meal.jpg" alt="Impact" className="w-full h-full object-cover" />
             <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(30,61,42,0.6), transparent)" }} />
           </div>
         </div>
@@ -111,7 +111,7 @@ function Allocation() {
         <div>
           <Reveal><Eyebrow>Transparency</Eyebrow></Reveal>
           <SplitHeading text="Where your money goes" className="font-black text-[#1A1A18] mt-4 mb-5" style={{ fontFamily: "Georgia, serif", fontSize: "clamp(1.8rem,3.6vw,2.6rem)", letterSpacing: "-0.02em" }} color="#1A1A18" />
-          <Reveal y={18} delay={0.1}><p className="text-gray-500 leading-relaxed mb-7">We hold ourselves to radical accountability. The overwhelming majority of every gift reaches programs and the people they serve — and we publish the breakdown openly.</p></Reveal>
+          <Reveal y={18} delay={0.1}><p className="text-gray-500 leading-relaxed mb-7">We keep running costs low and publish how every naira is spent. Most of each gift goes straight to programmes.</p></Reveal>
           <div className="flex flex-col gap-4">
             {ALLOCATION.map((a, i) => (
               <Reveal key={a.label} y={16} delay={0.15 + i * 0.1}>
@@ -132,15 +132,15 @@ function OtherWays() {
       <div className="max-w-[1080px] mx-auto">
         <div className="text-center mb-14">
           <Reveal><Eyebrow center>More Ways To Help</Eyebrow></Reveal>
-          <SplitHeading text="Generosity comes in many forms" className="font-black text-[#1A1A18] mt-4" style={{ fontFamily: "Georgia, serif", fontSize: "clamp(1.8rem,4vw,3rem)", letterSpacing: "-0.02em" }} color="#1A1A18" />
+          <SplitHeading text="Other ways to help" className="font-black text-[#1A1A18] mt-4" style={{ fontFamily: "Georgia, serif", fontSize: "clamp(1.8rem,4vw,3rem)", letterSpacing: "-0.02em" }} color="#1A1A18" />
         </div>
         <div className="grid md:grid-cols-3 gap-5">
           {WAYS.map((w, i) => (
             <Reveal key={w.title} y={34} delay={i * 0.12} className="h-full">
               <div className="group rounded-3xl p-8 h-full bg-white transition-all duration-500 hover:-translate-y-2" style={{ boxShadow: "0 4px 22px rgba(0,0,0,0.05)" }}
                 onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 22px 50px rgba(0,0,0,0.1)")} onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "0 4px 22px rgba(0,0,0,0.05)")}>
-                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6" style={{ background: `${C.coral}1a` }}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.coral} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={w.icon} /></svg>
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6" style={{ background: `${C.primary}1a` }}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={w.icon} /></svg>
                 </div>
                 <h3 className="font-extrabold text-[#1A1A18] text-lg mb-2" style={{ fontFamily: "Georgia, serif" }}>{w.title}</h3>
                 <p className="text-gray-500 text-sm leading-relaxed">{w.desc}</p>
@@ -155,27 +155,16 @@ function OtherWays() {
 
 function Goal() {
   return (
-    <section className="relative w-full overflow-hidden" style={{ background: C.green }}>
-      <div className="absolute inset-0 opacity-10"><img src="/assets/african-map.png" alt="" className="w-full h-full object-contain" style={{ filter: "brightness(0) invert(1)" }} /></div>
-      <div className="relative max-w-[840px] mx-auto px-5 md:px-10 py-20 md:py-24 text-center">
-        <Reveal><Eyebrow center color={C.lime}>2026 Campaign</Eyebrow></Reveal>
-        <SplitHeading text="Help us reach $55,000 this year" className="font-black text-white mt-4 mb-8" style={{ fontFamily: "Georgia, serif", fontSize: "clamp(1.8rem,4.5vw,3rem)", letterSpacing: "-0.02em" }} color="#fff" hoverColor={C.lime} />
-        <Reveal y={20} delay={0.1}>
-          <div className="rounded-full overflow-hidden mb-3" style={{ height: 16, background: "rgba(255,255,255,0.15)" }}>
-            <div className="h-full rounded-full flex items-center justify-end pr-2" style={{ width: "73%", background: `linear-gradient(90deg, ${C.lime}, #cdee9c)` }} />
-          </div>
-          <div className="flex justify-between text-white/80 font-bold text-sm"><span>$40,000 raised</span><span>73% of goal</span></div>
-        </Reveal>
-        <Reveal delay={0.25} className="mt-9"><Btn href="#top" to="/donate" variant="lime">Donate Now</Btn></Reveal>
-      </div>
-    </section>
+    <GlassCTA image="/assets/kids-playing.jpg" eyebrow="2026 Campaign" title="Help us reach more families this year"
+      text="Every gift, big or small, keeps a classroom open, a family earning and a child cared for."
+      actions={<Btn href="#give" variant="lime" onClick={(e) => { e.preventDefault(); document.getElementById("give")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>Make A Gift</Btn>} />
   );
 }
 
 export default function Donate() {
   return (
     <Page>
-      <PageHero image="/assets/hero-lafodap9.jpg" height="70vh" crumb="Donate" eyebrow="Give Hope" title="Your gift rebuilds a life." sub="A small act of generosity ripples into education, healthcare, dignity and independence for those who need it most." />
+      <PageHero image="/assets/hero-donate.jpg" title="Your gift rebuilds a life." sub="Your gift pays for school fees, eye checks, wheelchairs and skills training for families across Nigeria." />
       <DonateWidget />
       <Allocation />
       <OtherWays />
