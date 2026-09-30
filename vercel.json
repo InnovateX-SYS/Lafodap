@@ -3,6 +3,11 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "redirects": [
+    { "source": "/webmail", "destination": "https://webmail.lafodapnigeria.net:2096", "permanent": false },
+    { "source": "/mail", "destination": "https://webmail.lafodapnigeria.net:2096", "permanent": false },
+    { "source": "/cpanel", "destination": "https://cpanel.lafodapnigeria.net:2083", "permanent": false }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ],
